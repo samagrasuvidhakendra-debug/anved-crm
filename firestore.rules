@@ -1,0 +1,108 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function isSuperAdmin() {
+      return isAuthenticated() && getUserData().role == 'SUPER_ADMIN';
+    }
+    
+    function isActiveUser() {
+      return isAuthenticated() && getUserData().status == 'active';
+    }
+    
+    function isFranchiseMember(franchiseId) {
+      return isActiveUser() && getUserData().franchiseId == franchiseId;
+    }
+    
+    function isFranchiseOwner(franchiseId) {
+      return isFranchiseMember(franchiseId) && getUserData().role == 'FRANCHISE_OWNER';
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isSuperAdmin() || request.auth.uid == userId || getUserData().franchiseId == resource.data.franchiseId);
+      allow create, update, delete: if isSuperAdmin() || (isFranchiseOwner(resource.data.franchiseId) && resource.data.role != 'SUPER_ADMIN' && resource.data.role != 'FRANCHISE_OWNER');
+    }
+    
+    // Franchises Collection
+    match /franchises/{franchiseId} {
+      allow read: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(franchiseId));
+      allow write: if isSuperAdmin();
+    }
+    
+    // Multi-tenant business collections
+    match /customers/{customerId} {
+      allow read: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId));
+      allow create: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(request.resource.data.franchiseId));
+      allow update, delete: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId));
+    }
+    
+    match /leads/{leadId} {
+      allow read: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId));
+      allow create: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(request.resource.data.franchiseId));
+      allow update, delete: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId));
+    }
+    
+    match /followUps/{followUpId} {
+      allow read, write: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId) || isFranchiseMember(request.resource.data.franchiseId));
+    }
+    
+    match /projects/{projectId} {
+      allow read: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId));
+      allow write: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId) || isFranchiseMember(request.resource.data.franchiseId));
+    }
+    
+    match /quotations/{quotationId} {
+      allow read: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId));
+      allow write: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId) || isFranchiseMember(request.resource.data.franchiseId));
+    }
+    
+    match /payments/{paymentId} {
+      allow read: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId));
+      allow write: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId) || isFranchiseMember(request.resource.data.franchiseId));
+    }
+    
+    match /siteSurveys/{surveyId} {
+      allow read, write: if isAuthenticated() && (isSuperAdmin() || isFranchiseMember(resource.data.franchiseId) || isFranchiseMember(request.resource.data.franchiseId));
+    }
+
+    match /products/{productId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+    
+    match /announcements/{announcementId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+
+    match /guideContent/{guideId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated() && (isSuperAdmin() || resource.data.targetUserId == request.auth.uid || resource.data.franchiseId == getUserData().franchiseId);
+      allow write: if isAuthenticated();
+    }
+
+    match /auditLogs/{logId} {
+      allow read: if isSuperAdmin();
+      allow create: if isAuthenticated();
+    }
+    
+    match /settings/{settingId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+  }
+}

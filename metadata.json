@@ -1,0 +1,6 @@
+{
+  "name": "ACS SOLAR — Multi-User CRM & Business Management Platform",
+  "description": "Enterprise multi-tenant CRM, franchise management, solar project tracking, quotation generator, and AI Assistant for ACS SOLAR.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

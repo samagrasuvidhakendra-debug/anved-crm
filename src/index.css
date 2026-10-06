@@ -1,0 +1,336 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-slate-950: #020617;
+    --color-slate-900: #0f172a;
+    --color-slate-800: #1e293b;
+    --color-slate-700: #334155;
+    --color-slate-600: #475569;
+    --color-slate-500: #64748b;
+    --color-slate-400: #94a3b8;
+    --color-slate-300: #cbd5e1;
+    --color-slate-200: #e2e8f0;
+    --color-slate-100: #f1f5f9;
+    --color-white: #ffffff;
+    --brand-primary: #10b981;
+    --brand-primary-dark: #059669;
+    --brand-solar: #f59e0b;
+    --brand-electric: #0284c7;
+    color-scheme: dark;
+  }
+
+  html.light,
+  [data-theme="light"],
+  body.light {
+    --color-slate-950: #f8fafc;
+    --color-slate-900: #ffffff;
+    --color-slate-800: #f1f5f9;
+    --color-slate-700: #e2e8f0;
+    --color-slate-600: #cbd5e1;
+    --color-slate-500: #64748b;
+    --color-slate-400: #475569;
+    --color-slate-300: #334155;
+    --color-slate-200: #1e293b;
+    --color-slate-100: #0f172a;
+    --color-white: #ffffff;
+    color-scheme: light;
+  }
+
+  /* Light Theme High-Contrast Adjustments */
+  html.light,
+  [data-theme="light"] {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  html.light body,
+  [data-theme="light"] body {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  /* In light mode, treat text-white on light surfaces as dark text */
+  html.light .bg-slate-900 .text-white,
+  html.light .bg-slate-950 .text-white,
+  html.light .bg-slate-800 .text-white,
+  [data-theme="light"] .bg-slate-900 .text-white,
+  [data-theme="light"] .bg-slate-950 .text-white,
+  [data-theme="light"] .bg-slate-800 .text-white {
+    color: #0f172a;
+  }
+
+  /* Preserve pure white text on accent and notification badges */
+  html.light .bg-rose-500,
+  html.light .bg-rose-600,
+  html.light .bg-emerald-600,
+  html.light .bg-sky-600,
+  html.light .bg-blue-600,
+  html.light .bg-indigo-600,
+  html.light .bg-purple-600,
+  [data-theme="light"] .bg-rose-500,
+  [data-theme="light"] .bg-rose-600,
+  [data-theme="light"] .bg-emerald-600,
+  [data-theme="light"] .bg-sky-600,
+  [data-theme="light"] .bg-blue-600,
+  [data-theme="light"] .bg-indigo-600,
+  [data-theme="light"] .bg-purple-600 {
+    color: #ffffff !important;
+  }
+
+  /* Keep dark text on amber and action buttons */
+  html.light .text-slate-950,
+  [data-theme="light"] .text-slate-950 {
+    color: #020617 !important;
+  }
+
+  /* High contrast colors for text badges in light mode */
+  html.light .text-amber-400,
+  [data-theme="light"] .text-amber-400 {
+    color: #b45309 !important;
+  }
+
+  html.light .text-emerald-400,
+  [data-theme="light"] .text-emerald-400 {
+    color: #047857 !important;
+  }
+
+  html.light .text-sky-400,
+  [data-theme="light"] .text-sky-400 {
+    color: #0369a1 !important;
+  }
+
+  html.light .text-rose-400,
+  [data-theme="light"] .text-rose-400 {
+    color: #be123c !important;
+  }
+
+  html.light .text-purple-400,
+  [data-theme="light"] .text-purple-400 {
+    color: #7e22ce !important;
+  }
+
+  html.light .text-teal-400,
+  [data-theme="light"] .text-teal-400 {
+    color: #0f766e !important;
+  }
+
+  /* Inputs and selects in light mode */
+  html.light input:not([type="checkbox"]):not([type="radio"]),
+  html.light select,
+  html.light textarea,
+  [data-theme="light"] input:not([type="checkbox"]):not([type="radio"]),
+  [data-theme="light"] select,
+  [data-theme="light"] textarea {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  html.light input::placeholder,
+  html.light textarea::placeholder,
+  [data-theme="light"] input::placeholder,
+  [data-theme="light"] textarea::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  /* Card and Panel elevation in light mode */
+  html.light .bg-slate-900,
+  [data-theme="light"] .bg-slate-900 {
+    background-color: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  }
+
+  html.light .bg-slate-950,
+  [data-theme="light"] .bg-slate-950 {
+    background-color: #f8fafc;
+  }
+
+  html.light .bg-slate-800,
+  [data-theme="light"] .bg-slate-800 {
+    background-color: #f1f5f9;
+  }
+
+  html.light .border-slate-800,
+  [data-theme="light"] .border-slate-800 {
+    border-color: #e2e8f0;
+  }
+
+  html.light .border-slate-700,
+  [data-theme="light"] .border-slate-700 {
+    border-color: #cbd5e1;
+  }
+
+  /* Dropdowns and Popovers in light mode */
+  html.light #header-more-dropdown,
+  html.light #role-switch-dropdown,
+  [data-theme="light"] #header-more-dropdown,
+  [data-theme="light"] #role-switch-dropdown {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Subtle scrollbar */
+  html.light ::-webkit-scrollbar-track,
+  [data-theme="light"] ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  html.light ::-webkit-scrollbar-thumb,
+  [data-theme="light"] ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+}
+
+/* ========================================================================= */
+/* GLOBAL FIX FOR INTERACTIVE ELEMENTS: SELECTS, DROPDOWNS & FORM CONTROLS    */
+/* ========================================================================= */
+
+/* Ensure all interactive controls have pointer-events auto, cursor pointer, and proper user-select */
+select,
+input,
+textarea,
+button,
+a,
+label,
+summary,
+[role="button"],
+[role="combobox"],
+[role="listbox"],
+[role="option"],
+[role="menu"],
+[role="menuitem"],
+[role="menuitemcheckbox"],
+[role="menuitemradio"],
+[role="tab"],
+[role="dialog"],
+[tabindex],
+.interactive-element,
+.dropdown-menu {
+  pointer-events: auto !important;
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+}
+
+/* Ensure select elements are always fully clickable, focusable, and visually responsive */
+select {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+  touch-action: manipulation !important;
+  position: relative;
+  z-index: 10;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 1rem 1rem !important;
+  padding-right: 2.25rem !important;
+}
+
+/* For compact/mini selects */
+select.text-\[10px\],
+select.text-xs.py-1,
+select.py-1 {
+  background-position: right 0.35rem center !important;
+  background-size: 0.75rem 0.75rem !important;
+  padding-right: 1.4rem !important;
+}
+
+/* In light theme, change chevron to dark emerald */
+html.light select,
+[data-theme="light"] select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23059669' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+
+/* Focus outline for accessibility and keyboard/mouse clarity in brand emerald */
+select:focus,
+select:focus-visible,
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  outline: none !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Ensure native options inside all select elements are high-contrast and readable in all OS & themes */
+select option,
+select optgroup {
+  pointer-events: auto !important;
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+  cursor: pointer !important;
+}
+
+select option:checked {
+  background-color: #064e3b !important;
+  color: #34d399 !important;
+  font-weight: 700 !important;
+}
+
+/* In light theme, enforce clean white background and dark slate text for options */
+html.light select option,
+html.light select optgroup,
+[data-theme="light"] select option,
+[data-theme="light"] select optgroup {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+html.light select option:checked,
+[data-theme="light"] select option:checked {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+  font-weight: 700 !important;
+}
+
+/* Disabled selects */
+select:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.55 !important;
+}
+
+/* Ensure all dropdown containers (custom menus, popovers, modals) have pointer-events auto and high z-index */
+#header-more-dropdown,
+#role-switch-dropdown,
+[role="menu"],
+[role="listbox"],
+[data-dropdown],
+.dropdown-content {
+  pointer-events: auto !important;
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+  z-index: 70 !important;
+}
+
+/* Ensure backdrop blur or fixed overlays don't block clicks on their child modal contents */
+.fixed.inset-0.z-50,
+.fixed.inset-0.z-40,
+.fixed.inset-0.z-\[100\] {
+  pointer-events: auto;
+}
+
+.fixed.inset-0 > div,
+.fixed.inset-0 > form,
+.fixed.inset-0 > [role="dialog"] {
+  pointer-events: auto !important;
+}
+
+/* Decorative background overlays with pointer-events-none */
+.pointer-events-none,
+.pointer-events-none * {
+  pointer-events: none !important;
+}
+
+

@@ -1,0 +1,24 @@
+{
+  "name": "ACS SOLAR Platform",
+  "short_name": "ACS SOLAR",
+  "description": "Enterprise multi-tenant CRM, franchise management, solar project tracking, quotation generator, and AI Assistant for ACS SOLAR.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#059669",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
